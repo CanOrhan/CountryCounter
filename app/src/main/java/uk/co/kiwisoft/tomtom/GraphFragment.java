@@ -20,7 +20,7 @@ public class GraphFragment extends Fragment {
     @Bind({
         R.id.node_0_0, R.id.node_1_0, R.id.node_2_0,
         R.id.node_0_1, R.id.node_1_1, R.id.node_2_1,
-        R.id.node_0_2, R.id.node_1_2, R.id.node_2_2,
+        R.id.node_0_2, R.id.node_1_2, R.id.node_2_2
     }) TextView[] nodeTextViews;
 
     @Bind(R.id.calculate) TextView calculateTextView;
@@ -39,6 +39,16 @@ public class GraphFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_graph, container, false);
         ButterKnife.bind(this, v);
         return v;
+    }
+
+    @OnClick({
+        R.id.node_0_0, R.id.node_1_0, R.id.node_2_0,
+        R.id.node_0_1, R.id.node_1_1, R.id.node_2_1,
+        R.id.node_0_2, R.id.node_1_2, R.id.node_2_2
+    })
+    public void increaseValue(TextView v){
+        int val = Integer.valueOf(v.getText().toString());
+        v.setText((val + 1) + "");
     }
 
     @OnClick(R.id.calculate)
