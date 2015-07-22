@@ -34,13 +34,33 @@ public class CountriesService {
         int downNodeIndex = nodes.indexOf(new Node(node.getX(), node.getY() + 1, 0));
         boolean checkDown = downNodeIndex != -1;
 
-        if (!node.isClaimed()){
-            countries += 1;
+        int upNodeIndex = nodes.indexOf(new Node(node.getX(), node.getY() - 1, 0));
+        boolean checkUp = upNodeIndex != -1;
+
+        int leftNodeIndex = nodes.indexOf(new Node(node.getX() - 1, node.getY(), 0));
+        boolean checkLeft = leftNodeIndex != -1;
+
+        boolean partOfCountry = false;
+
+        if (checkLeft){
+            Node leftNode = nodes.get(leftNodeIndex);
+            if(leftNode.getColor() == node.getColor()) {
+                partOfCountry = partOfCountry | leftNode.isClaimed();
+            }
         }
+
+        if(checkUp){
+            Node upNode = nodes.get(upNodeIndex);
+            if(upNode.getColor() == node.getColor()) {
+                partOfCountry = partOfCountry | upNode.isClaimed();
+            }
+        }
+
 
         if(checkRight){
             Node rightNode = nodes.get(rightNodeIndex);
             if(rightNode.getColor() == node.getColor()){
+                partOfCountry = partOfCountry | rightNode.isClaimed();
                 if(!rightNode.isClaimed()){
                     rightNode.setIsClaimed(true);
                 }
@@ -50,10 +70,16 @@ public class CountriesService {
         if(checkDown){
             Node downNode = nodes.get(downNodeIndex);
             if(downNode.getColor() == node.getColor()){
+                partOfCountry = partOfCountry | downNode.isClaimed();
                 if(!downNode.isClaimed()){
                     downNode.setIsClaimed(true);
                 }
             }
         }
+
+        if (!partOfCountry && !node.isClaimed()){
+            countries += 1;
+        }
+
     }
 }
